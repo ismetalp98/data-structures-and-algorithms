@@ -50,16 +50,12 @@ void Person::insertFriend(string name)
 
 void Person::printList()
 {
-	bool empty = true;
 	FrindListNode* tempt = root;
 	while (tempt != NULL)
 	{
-		empty = false;
 		cout << tempt->data.name <<"  ";
 		tempt = tempt->next;
 	}
-	if(empty)
-		cout << "empty"<<endl;
 	cout << endl;
 }
 

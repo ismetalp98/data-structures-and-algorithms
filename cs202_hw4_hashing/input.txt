@@ -11,7 +11,10 @@ L Ahmet
 U Mehmet Ahmet
 L Mehmet
 L Ahmet
-L Veli
 Q Ahmet Mehmet
 Q Ali Veli
+F Ahmet Mehmet
+P Asya
+F Ali Asya
+Q Asya Ali
 X

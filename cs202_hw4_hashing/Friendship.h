@@ -25,6 +25,7 @@ private:
 	string tag;
 	FrindListNode* p1 = NULL;
 	FrindListNode* p2 = NULL;
+	string condition;
 
 	friend class FriendshipHashing;
 };

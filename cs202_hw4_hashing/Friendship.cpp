@@ -13,20 +13,20 @@
 
 Friendship::Friendship(Person* pe1, Person* pe2)
 {
-	if (pe1->name[0] < pe2->name[0])
+	if (pe1->name < pe2->name)
 	{
 		tag = pe1->name + pe2->name;
 	}
 	else
 		tag = pe2->name + pe1->name;
 
+
 	pe1->insertFriend(pe2->name);
 	pe2->insertFriend(pe1->name);
 
 	Friendship::p1 = pe2->root;
 	Friendship::p2 = pe1->root;
-
-
+	condition = "occupied";
 }
 
 
@@ -34,4 +34,5 @@ Friendship::Friendship(Person* pe1, Person* pe2)
 Friendship::Friendship()
 {
 	tag = "";
+	condition = "empty";
 }

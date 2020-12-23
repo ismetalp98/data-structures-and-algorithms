@@ -18,28 +18,29 @@ FriendshipHashing::FriendshipHashing()
 void FriendshipHashing::insertFriendship(Friendship fs)
 {
 	int sum = 0;
-	for (int i = 0; i < fs.tag.length(); i++)
+	for (int i = 0; i < (int)fs.tag.length(); i++)
 	{
 		sum += fs.tag[i];
 	}
 
 	sum = sum % 71;
 
-	if (arr[sum].tag == "")
+	if (arr[sum].condition != "occupied")
 	{
 		arr[sum] = fs;
 	}
 	else
 	{
 		int i = 1;
-		while (arr[sum].tag != "")
+		while (arr[sum].condition == "occupied")
 		{
-			sum += pow(i,2);
+			sum += pow(i, 2);
 			sum = sum % 71;
 			i++;
 		}
 		arr[sum] = fs;
 	}
+
 }
 
 void FriendshipHashing::deleteFreiendship(Person* p1, Person* p2)
@@ -52,9 +53,9 @@ void FriendshipHashing::deleteFreiendship(Person* p1, Person* p2)
 	else
 		tag = p2->name + p1->name;
 
-	
 
-	for (int i = 0; i < tag.length(); i++)
+
+	for (int i = 0; i < (int)tag.length(); i++)
 	{
 		sum += tag[i];
 	}
@@ -62,33 +63,47 @@ void FriendshipHashing::deleteFreiendship(Person* p1, Person* p2)
 
 
 	int i = 1;
-	while (arr[sum].tag != tag)
+	bool founded = false;
+
+	while (arr[sum].condition != "empty")
 	{
-		sum += pow(i, 2);
-		sum = sum % 71;
-		i++;
+		if (arr[sum].tag == tag)
+		{
+			founded = true;
+			break;
+		}
+		else
+		{
+			sum += pow(i, 2);
+			sum = sum % 71;
+			i++;
+		}
 	}
 
-
-	if (p1->name != arr[sum].p1->data.name)
+	if (founded)
 	{
-		p1->deleteFriend(arr[sum].p1);
-		p2->deleteFriend(arr[sum].p2);
-	}
-	else
-	{
-		p1->deleteFriend(arr[sum].p2);
-		p2->deleteFriend(arr[sum].p1);
-	}
+		if (p1->name != arr[sum].p1->data.name)
+		{
+			p1->deleteFriend(arr[sum].p1);
+			p2->deleteFriend(arr[sum].p2);
+		}
+		else
+		{
+			p1->deleteFriend(arr[sum].p2);
+			p2->deleteFriend(arr[sum].p1);
+		}
 
-	arr[sum] = Friendship();
+		arr[sum].tag = "";
+		arr[sum].condition = "deleted";
+	}
 }
 
 void FriendshipHashing::find(Person* p1, Person* p2)
 {
 
+	int sum = 0;
 	string tag = "";
-	if (p1->name[0] < p2->name[0])
+	if (p1->name < p2->name)
 	{
 		tag = p1->name + p2->name;
 	}
@@ -96,16 +111,32 @@ void FriendshipHashing::find(Person* p1, Person* p2)
 		tag = p2->name + p1->name;
 
 
-
-	for (int i = 0; i < 71; i++)
+	for (int i = 0; i < (int)tag.length(); i++)
 	{
-		if (arr[i].tag == tag)
+		sum += tag[i];
+	}
+	sum = sum % 71;
+
+
+	int i = 1;
+	bool founded = false;
+	while (arr[sum].condition != "empty")
+	{
+		if (arr[sum].tag == tag)
 		{
+			founded = true;
 			cout << "yes" << endl;
-			return;
+			break;
+		}
+		else
+		{
+			sum += pow(i, 2);
+			sum = sum % 71;
+			i++;
 		}
 	}
-	cout << "no" << endl;;
+	if(!founded)
+		cout << "no" << endl;
 }
 
 
