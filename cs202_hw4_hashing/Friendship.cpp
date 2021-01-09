@@ -13,6 +13,8 @@
 
 Friendship::Friendship(Person* pe1, Person* pe2)
 {
+	if (pe1->name == pe2->name)
+		return;
 	if (pe1->name < pe2->name)
 	{
 		tag = pe1->name + pe2->name;
